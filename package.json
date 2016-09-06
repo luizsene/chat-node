@@ -1,0 +1,45 @@
+{
+  "name": "chat",
+  "version": "0.0.1",
+  "description": "Chat multiroom for Nodejs",
+  "main": "app.js",
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1fabiopereira/chat-node.git"
+  },
+
+  "keywords": [
+    "chat",
+    "nodejs",
+    "multiroom",
+    "socket.io"
+  ],
+
+  "author": "Fábio Pereira <fabio.pereira.gti@gmail.com>",
+
+  "license": "MIT",
+
+  "bugs": {
+    "url": "https://github.com/1fabiopereira/chat-node/issues"
+  },
+
+  "homepage": "https://github.com/1fabiopereira/chat-node#readme",
+
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.4.0",
+    "istanbul": "^0.4.5",
+    "jsdocs": "^0.1.0",
+    "mocha": "^3.0.2"
+  },
+
+  "scripts": {
+    "test": "mocha ./test",
+    "eslint": "eslint ./core/**/*.js ",
+    "cover": "istanbul cover _mocha -- ./test/* --recursive",
+    "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
+    "jsdocs": "jsdoc ./core/**/*.js"
+  }
+  
+}
