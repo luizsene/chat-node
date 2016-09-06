@@ -8,7 +8,6 @@
     "type": "git",
     "url": "git+https://github.com/1fabiopereira/chat-node.git"
   },
-
   "keywords": [
     "chat",
     "nodejs",
@@ -31,15 +30,20 @@
     "eslint": "^3.4.0",
     "istanbul": "^0.4.5",
     "jsdocs": "^0.1.0",
-    "mocha": "^3.0.2"
+    "mocha": "^3.0.2",
+    "socket.io-client": "^1.4.8"
   },
 
   "scripts": {
-    "test": "mocha ./test",
-    "eslint": "eslint ./core/**/*.js ",
+    "test": "mocha -b -R spec -s 1000 -t 3000 ./test",
+    "eslint": "eslint ./core/*.js ",
     "cover": "istanbul cover _mocha -- ./test/* --recursive",
     "coveralls": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
-    "jsdocs": "jsdoc ./core/**/*.js"
+    "jsdocs": "./node_modules/.bin/jsdocs ./core/*.js -d ./docs"
+  },
+
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.4.8"
   }
-  
 }
