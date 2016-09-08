@@ -6,5 +6,5 @@ module.exports = (id, decode) => {
   if(!decode)
     return new Buffer(String(id)).toString('base64');
   else
-    return new Buffer(id, 'base64').toString();
+     return new Buffer(id, 'base64').toString();
 };

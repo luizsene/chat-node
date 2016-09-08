@@ -18,6 +18,16 @@ describe("Users", () => {
     let user = new User(client, {id: 1});
     let user2 = new User(client, {id: 2});
 
+    it("Socket não é definido", () => {
+      const user_erro = new User(null, {id: 3});
+      assert.isDefined('Socket cannot be null', user_erro.message);
+    });
+
+    it("Dados do usuário não é definido", ()=>{
+      const user_erro = new User(client, null);
+      assert.isDefined('Data cannot be null', user_erro.message);
+    });
+
     it("Criação de um novo usuário", (done)=>{
       assert.isDefined(user, "User não é definido");
       done();
@@ -42,9 +52,17 @@ describe("Users", () => {
     })
 
     it("Envia mensagem", ()=>{
-      user.sendTo(2, {msg: "Olá como vai ?"});
-      client2.on('msg', (data)=>{
-        assert.deepEqual( {msg: "Olá como vai ?"}, data);
+      user.sendTo(2, {message: "Olá como vai ?"});
+      client2.on('message', (data)=>{
+        assert.deepEqual( {message: "Olá como vai ?"}, data);
       })
     })
+
+    it("Usuário desconectado", ()=>{
+      user.offline(1);
+      user.offline(2);
+      assert.deepEqual({online: false}, user.isOnline(1));
+      assert.deepEqual({online: false}, user.isOnline(2));
+      assert.equal(0, user.getSize(), "O número de usuários não está correto.");
+    });
 });

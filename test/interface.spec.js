@@ -2,6 +2,8 @@
 const assert = require('chai').assert;
 const io = require('socket.io-client');
 const chat = require('../core/interface');
+const User = require('../core/user');
+
 
 const socketURL = 'http://0.0.0.0:3000';
 
@@ -57,16 +59,30 @@ describe("Interface Chat", () => {
       });
 
       client.on('connection-on', (data) =>{
-        client.emit('send-msg', {id: 2, msg: "Hello gays !"});
+        client.emit('send-message', {id: 2, message: "Hello gays !"});
       });
 
     });
 
     it('Envio de mensagem',() => {
-      client2.on('msg', (data) =>{
-        assert.deepEqual({id: 2, msg: "Hello gays !"}, data);
+      client2.on('message', (data) =>{
+        assert.deepEqual({id: 2, message: "Hello gays !"}, data);
       });
     });
-
   });
+
+  describe("Usuário é desconectado", ()=>{
+    it("Conexão é finalizada", ()=>{
+
+      const client = io.connect(socketURL, options);
+      const user = new User(client, {id: 1});
+
+      client.on('disconnect', (data)=>{
+        assert.deepEqual(1, data.user_id)
+        assert.deepEqual({online: false}, user.isOnline(1));
+        assert.equal(0, user.getSize(), "O número de usuários não está correto.");
+      })
+    })
+  });
+
 });

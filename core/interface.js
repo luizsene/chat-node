@@ -3,34 +3,31 @@
 const User = require('./user');
 
 /**
- * Represents a book.
- * @name interface
- * @constructor
- * @param {object} io - Instance of socket.io
- */
+* Represents a connection between users.
+* @module core/interface
+* @name Interface
+* @param {object} io - Instance of socket.io
+*/
+
 const interface_chat = (io) =>{
 
   /**
-  * Connection a new user event
-  *
-  * @event Interface#connection
-  * @type {object}
-  * @property {object} socket - Single instance of connection.
+  * Open server connection
+  * @event connection
+  * @param {object} socket - client socket
   */
   io.on('connection', (socket) =>{
 
+    //instance of user
     let user;
 
-    /**
-    * @event Interface#connection#connection
-    * @type {object}
-    */
+    //send to client message connect open
     socket.emit('connection', {status: true});
 
     /**
-    * @event Interface#connection#connectio-accepted
-    * @type {object}
-    * @param {object} data
+    * Client send to server message saying your credentials
+    * @event connection-accepted
+    * @param {object} data - data of user
     */
     socket.on('connection-accepted', (data) => {
       user = new User(socket, data);
@@ -39,8 +36,12 @@ const interface_chat = (io) =>{
       //fnCheckQueue(socket, data);
     });
 
-
-    socket.on('send-msg', (data) => {
+    /**
+    * Send message
+    * @event send-message
+    * @param {object} data - data of message
+    */
+    socket.on('send-message', (data) => {
       // TODO: disparar msg para a devida pessoa
       user.sendTo(data.id, data);
 
@@ -49,10 +50,14 @@ const interface_chat = (io) =>{
     });
 
 
-    // TODO: collector garbage
-    socket.on('disconnect', () => {
+    /**
+    * Remove user connected
+    * @event desconnect
+    * @param {object} data - data of user
+    */
+    socket.on('disconnect', (data) => {
       // TODO: Remove usuario da lista de online
-    //  fnOffline();
+      user.offline(data.user_id);
     });
   });
 };
