@@ -51,12 +51,17 @@ describe("Users", () => {
       assert.deepEqual({online: false}, user.isOnline(4), "Usuário está online");
     })
 
-    it("Envia mensagem", ()=>{
+    it("Envia mensagem usuário online", ()=>{
       user.sendTo(2, {message: "Olá como vai ?"});
       client2.on('message', (data)=>{
         assert.deepEqual( {message: "Olá como vai ?"}, data);
       })
     })
+
+    // it("Envia mensagem usuário offline", ()=>{
+    //   let res = user.sendTo(5, {message: "Olá como vai ?"});
+    //   assert.deepEqual(false, res);
+    // })
 
     it("Usuário desconectado", ()=>{
       user.offline(1);
