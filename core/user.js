@@ -1,5 +1,8 @@
 'use strict';
 
+const checkQueue = require('./checkQueue');
+const saveQueue = require('./saveQueue');
+
 /**
 * List of all users online
 * @member {Object}
@@ -77,7 +80,7 @@ User.prototype.isOnline = (id) => {
 * @param {integer} id - user id
 * @memberof User
 */
-User.prototype.offline = function (id) {
+User.prototype.offline = (id) => {
   delete online_list[base64(id)];
 };
 
@@ -87,7 +90,7 @@ User.prototype.offline = function (id) {
 * @name getSize
 * @memberof User
 */
-User.prototype.getSize = function () {
+User.prototype.getSize = () => {
   return Object.keys(online_list).length;
 };
 
@@ -98,7 +101,7 @@ User.prototype.getSize = function () {
 * @memberof User
 * @returns {Array}
 */
-User.prototype.getArray = function () {
+User.prototype.getArray = () => {
   return Object.getOwnPropertyNames(online_list)
   .map((key) => parseInt(base64(key, true)));
 };
@@ -119,8 +122,7 @@ User.prototype.sendTo = (id, data) =>{
 
   if(socketUser){
     socketUser.emit('message', data);
-  }
-  else{
+  } else {
     //salvar na fila
     push = new Notification();
     push.send(push.formatMessage(data), (err, data)=>{
@@ -129,6 +131,15 @@ User.prototype.sendTo = (id, data) =>{
   }
 
   return retorno;
+};
+
+User.prototype.checkQueue = (id) =>{
+  const socketUser = self.getUser(id);
+  return socketUser ? checkQueue(id) : null;
+};
+
+User.prototype.saveQueue = (id, data) =>{
+  return id && data ? saveQueue(id, data) : null;
 };
 
 module.exports = User;

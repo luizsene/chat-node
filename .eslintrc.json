@@ -33,7 +33,7 @@
     ],
     "max-len": [
       "error",
-      80,
+      100,
       2
     ],
     "prefer-const": "error",

@@ -20,22 +20,33 @@ const interface_chat = (io) =>{
 
     let user;
 
+    // Open de connection
     socket.emit('connection', {status: true});
 
+    // handshack
     socket.on('connection-accepted', (data) => {
+
+      // instance of new user
       user = new User(socket, data);
+
+      // confirm connection with client
       socket.emit('connection-on', {status: true});
-      // TODO: verificar se o novo usuário logado tem alguma coisa na fila
-      //fnCheckQueue(socket, data);
+
+      //verify if destination user is online
+      if(user.isOnline(data.id))
+        user.checkQueue(data.id);
+      else
+        user.saveQueue(data.destination, data);
     });
 
+    // send message
     socket.on('send-message', (data) => {
       user.sendTo(data.id, data);
     });
 
+    // disconnect
     socket.on('disconnect', (data) => {
-      // TODO: Remove usuario da lista de online
-      user.offline(data.user_id);
+      user.offline(data.user_id || 0);
     });
 
   });

@@ -10,7 +10,7 @@ function Notification() {
 Notification.prototype.formatMessage = function (data) {
 
   if(!data || data === {} || Array.isArray(data))
-    return new TypeError("Data is not object valid");
+    return new TypeError('Data is not object valid');
 
   const message = {
     notification: {
@@ -32,35 +32,35 @@ Notification.prototype.getFCM = function () {
 };
 
 Notification.prototype.getAuthorization = function () {
-  return ''
+  return '';
 };
 
 Notification.prototype.send = function (message, callbackReq) {
 
   const options = {
-    "method": "POST",
-    "hostname": "fcm.googleapis.com",
-    "port": null,
-    "path": "/fcm/send",
-    "headers": {
-      "content-type": "application/json",
-      "authorization": "key=" + self.getAuthorization(),
-      "cache-control": "no-cache",
+    'method': 'POST',
+    'hostname': 'fcm.googleapis.com',
+    'port': null,
+    'path': '/fcm/send',
+    'headers': {
+      'content-type': 'application/json',
+      'authorization': 'key=' + self.getAuthorization(),
+      'cache-control': 'no-cache',
     }
   };
 
   const callback = (res) => {
     res.setEncoding('utf8');
-    res.on('data', function (chunk) {
+    res.on('data', (chunk) => {
       callbackReq(null, chunk);
     });
-  }
+  };
 
   const req = http.request(options, callback);
   req.write(message);
   req.end();
 
-  req.on('error', function (err) {
+  req.on('error', (err) => {
     callbackReq(err, null);
   });
 };

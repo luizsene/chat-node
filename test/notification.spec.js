@@ -1,35 +1,37 @@
 'use strict';
 const assert = require('chai').assert;
 const Notification = require('../core/notification');
+const describe = require('mocha').describe;
+const it = require('mocha').it;
 
-describe("Notification", () => {
+describe('Notification', () => {
 
-
-  it("Cria uma nova instancia", ()=>{
+  it('Cria uma nova instancia', ()=>{
     const push = new Notification();
     assert.isDefined(push);
     assert.typeOf(push, 'object');
   });
 
-  it("Formata a mensagem para o envio", ()=>{
-    const data = {message: "Olá"};
+  it('Formata a mensagem para o envio', ()=>{
+    const data = {message: 'Olá'};
     const message = new Notification().formatMessage(data);
     assert.isDefined(message);
     assert.typeOf(message, 'string');
   });
 
-  it("Recuperar a chave FCM", ()=>{
+  it('Recuperar a chave FCM', ()=>{
     const push = new Notification();
     assert.typeOf(push.getFCM(), 'string');
   });
 
-  it("Recuperar a chave Authorization", ()=>{
+  it('Recuperar a chave Authorization', ()=>{
     const push = new Notification();
     assert.typeOf(push.getAuthorization(), 'string');
   });
 
-  it("Envia uma mensagem", (done)=>{
-    const data = {message: "Olá"};
+  // Descomentar somente quando for fazer o teste da fila
+/*  it('Envia uma mensagem', (done)=>{
+    const data = {message: 'Olá'};
     const push = new Notification();
     const message = push.formatMessage(data);
     push.send(message, (err, data)=>{
@@ -43,6 +45,6 @@ describe("Notification", () => {
       assert.propertyVal(data, 'failure', 0);
       done();
     });
-  })
+  });*/
 
 });
