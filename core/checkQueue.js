@@ -4,7 +4,7 @@ const redisClient = require('./redis');
 const base64 = require('./base64');
 
 const _callback = (err, reply) => {
-  return !err && reply && reply.length > 0 ? reply : err;
+  return !err && reply && reply.length > 0 ? reply.map(JSON.parse) : err;
 };
 
 const _exist = (id) => redisClient.exists(id, (err, reply) => reply === 1);

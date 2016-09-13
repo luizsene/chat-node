@@ -3,7 +3,7 @@
 /**
  * A module that encode or decode to base64
  * @module base64
- * @param {integer | String | Char} value
+ * @param {int | String } value
  * @param {Boolean} decode
  * @returns {String}
  * @author Fábio Pereira <fabio.pereira.gti@gmail.com>

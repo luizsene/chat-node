@@ -7,7 +7,8 @@ const app = require('express')();
 // }, app);
 const https = require('http').Server(app);
 const io = require('socket.io').listen(https);
-const chat = require('./core/interface')(io);
+const stream = require('socket.io-stream');
+const chat = require('./core/interface')(io, stream);
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');

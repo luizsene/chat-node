@@ -1,12 +1,14 @@
 'use strict';
 const assert = require('chai').assert;
 const describe = require('mocha').describe;
+const beforeEach = require('mocha').beforeEach;
 const it = require('mocha').it;
 const after = require('mocha').after;
 const io = require('socket.io-client');
 const User = require('../core/user');
+const ss = require('socket.io-stream');
+const fs = require('fs');
 const redisClient = require('../core/redis');
-const Promise = require('promise');
 
 const socketURL = 'http://0.0.0.0:3000';
 
@@ -19,6 +21,7 @@ describe('Users', () => {
 
   const client = io.connect(socketURL, options);
   const client2 = io.connect(socketURL, options);
+  const client3 = io.connect(socketURL, options);
   const user = new User(client, {id: 1});
   const user2 = new User(client, {id: 2});
 
@@ -83,15 +86,6 @@ describe('Users', () => {
     const saved = myUser.saveQueue(4, {message: 'Olá mundo redis'});
     assert.deepEqual(true, saved);
     done();
-  });
-
-  it('Recupera mensagem na fila do redis', ()=>{
-
-    const myUser = new User(client, {id: 4});
-    Promise.all([myUser.checkQueue(4)]).then((res)=>{
-      const resParsed = res.map(JSON.parse);
-      assert.deepEqual({message: 'Olá mundo redis'}, resParsed[0]);
-    });
   });
 
   it('Usuário desconectado', (done)=> {

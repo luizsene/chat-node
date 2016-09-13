@@ -53,7 +53,7 @@ function User(socket, data) {
 * Get user by id
 * @function
 * @name getUser
-* @param {integer} id - user id
+* @param {int} id - user id
 * @memberof User
 * @returns {Object}
 */
@@ -65,7 +65,7 @@ User.prototype.getUser = (id) => {
 * Verify if user is online or no
 * @function
 * @name isOnline
-* @param {integer} id - user id
+* @param {int} id - user id
 * @memberof User
 * @returns {Object}
 */
@@ -77,7 +77,7 @@ User.prototype.isOnline = (id) => {
 * Remove instance of user
 * @function
 * @name isOnline
-* @param {integer} id - user id
+* @param {int} id - user id
 * @memberof User
 */
 User.prototype.offline = (id) => {
@@ -110,7 +110,7 @@ User.prototype.getArray = () => {
 * Send message
 * @function
 * @name sendTo
-* @param {integer} id - User id
+* @param {int} id - User id
 * @param {Object} data - Data of message
 * @memberof User
 * @returns {Boolean}
@@ -123,19 +123,25 @@ User.prototype.sendTo = (id, data) =>{
   if(socketUser){
     socketUser.emit('message', data);
   } else {
-    //salvar na fila
     push = new Notification();
     push.send(push.formatMessage(data), (err, data)=>{
       retorno = err || data;
     });
   }
-
   return retorno;
+};
+
+User.prototype.sendFileTo = (id, stream, data)=>{
+    console.log("Meu streaming:> ",stream);
 };
 
 User.prototype.checkQueue = (id) =>{
   const socketUser = self.getUser(id);
-  return socketUser ? checkQueue(id) : null;
+
+  if(socketUser)
+    checkQueue(id, self).then((res) =>
+                res.forEach((resItem)=> self.sendTo(id, resItem)))
+                            .catch((err) => err);
 };
 
 User.prototype.saveQueue = (id, data) =>{
