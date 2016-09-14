@@ -6,6 +6,8 @@
 * @memberof Interface
 */
 const User = require('./user');
+const saveSQL = require('./sql');
+
 
 /**
 * Represents a connection between users.
@@ -42,6 +44,7 @@ const interface_chat = (io, stream) =>{
 
     // send message
     socket.on('send-message', (data) => {
+      saveSQL(data);
       user.isOnline(data.receiver).online
           ? user.sendTo(data.receiver, data)
           : user.saveQueue(data.receiver, data);
@@ -49,9 +52,9 @@ const interface_chat = (io, stream) =>{
 
     socket.on('online-list', (data)=>{
       User.prototype.checkListOnline.call(this, data).then(
-          res => socket.emit('online-list', res)
+          res => socket.emit('online-list-result', res)
       ).catch(
-          err => socket.emit('online-list', err)
+          err => socket.emit('online-list-result', err)
       );
     });
 

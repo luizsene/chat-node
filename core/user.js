@@ -82,7 +82,7 @@ User.prototype.checkListOnline = (list) =>{
       new_list.push({
         id: list[i].id,
         posicao:list[i].posicao,
-        online: self.isOnline(list[i]).online
+        online: self.isOnline(list[i].id).online
       });
       i++;
     }
