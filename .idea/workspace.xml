@@ -31,11 +31,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="interface.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="interface.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/interface.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
               <caret line="56" column="48" selection-start-line="56" selection-start-column="48" selection-end-line="56" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="notification.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/notification.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -293,7 +303,7 @@
       <workItem from="1473684276101" duration="6048000" />
       <workItem from="1473690518375" duration="13066000" />
       <workItem from="1473765815764" duration="11815000" />
-      <workItem from="1473851383469" duration="12637000" />
+      <workItem from="1473851383469" duration="12879000" />
     </task>
     <servers />
   </component>
@@ -330,7 +340,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43566000" />
+    <option name="totallyTimeSpent" value="43808000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="23" width="1407" height="985" extended-state="0" />
@@ -539,14 +549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/notification.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/mysql.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -575,6 +577,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
           <caret line="56" column="48" selection-start-line="56" selection-start-column="48" selection-end-line="56" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/notification.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
           <folding />
         </state>
       </provider>
