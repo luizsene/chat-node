@@ -73,6 +73,22 @@ User.prototype.isOnline = (id) => {
   return self.getUser(id) ? {online: true} : {online: false};
 };
 
+User.prototype.checkListOnline = (list) =>{
+  const new_list = [];
+  return new Promise(resolve =>{
+    let i = 0;
+    while (i < list.length){
+      new_list.push({
+        id: list[i].id,
+        posicao:list[i].posicao,
+        online: self.isOnline(list[i]).online
+      });
+      i++;
+    }
+    resolve(new_list);
+  });
+};
+
 /**
 * Remove instance of user
 * @function
@@ -117,16 +133,17 @@ User.prototype.getArray = () => {
 */
 User.prototype.sendTo = (id, data) =>{
   const socketUser = self.getUser(id);
-  let push;
   let retorno;
 
   if(socketUser){
     socketUser.emit('message', data);
   } else {
-    push = new Notification();
-    push.send(push.formatMessage(data), (err, data)=>{
-      retorno = err || data;
-    });
+    Notification.prototype.send.call(
+       this,
+       Notification.prototype.formatMessage.call(this, data), (err, data)=>{
+         retorno = err || data;
+       }
+    );
   }
   return retorno;
 };

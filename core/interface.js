@@ -16,6 +16,8 @@ const User = require('./user');
 */
 const interface_chat = (io, stream) =>{
 
+  const fnReport = user => console.log('Usuários ativos: ', user.getArray());
+
   io.on('connection', (socket) =>{
 
     let user;
@@ -34,6 +36,8 @@ const interface_chat = (io, stream) =>{
 
       //verify if user has any message
       user.checkQueue(data.id);
+
+      fnReport(user);
     });
 
     // send message
@@ -41,6 +45,14 @@ const interface_chat = (io, stream) =>{
       user.isOnline(data.receiver).online
           ? user.sendTo(data.receiver, data)
           : user.saveQueue(data.receiver, data);
+    });
+
+    socket.on('online-list', (data)=>{
+      User.prototype.checkListOnline.call(this, data).then(
+          res => socket.emit('online-list', res)
+      ).catch(
+          err => socket.emit('online-list', err)
+      );
     });
 
     // send message
@@ -53,9 +65,9 @@ const interface_chat = (io, stream) =>{
 
     // disconnect
     socket.on('disconnect', (data) => {
-      user ? user.offline(data.user_id || 0) : null;
+      User.prototype.offline.call(this, socket.user_id);
+      user ? fnReport(user) : null;
     });
-
   });
 };
 
