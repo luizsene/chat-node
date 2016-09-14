@@ -2,6 +2,7 @@
 
 const checkQueue = require('./checkQueue');
 const saveQueue = require('./saveQueue');
+const cleanQueue = require('./cleanQueue');
 
 /**
 * List of all users online
@@ -133,35 +134,26 @@ User.prototype.getArray = () => {
 */
 User.prototype.sendTo = (id, data) =>{
   const socketUser = self.getUser(id);
-  let retorno;
-
-  if(socketUser){
-    socketUser.emit('message', data);
-  } else {
-    Notification.prototype.send.call(
-       this,
-       Notification.prototype.formatMessage.call(this, data), (err, data)=>{
-         retorno = err || data;
-       }
-    );
-  }
-  return retorno;
+  socketUser.emit('message', data);
 };
 
 User.prototype.sendFileTo = (id, stream, data)=>{
-    console.log("Meu streaming:> ",stream);
+    //console.log("Meu streaming:> ",stream);
 };
 
 User.prototype.checkQueue = (id) =>{
   const socketUser = self.getUser(id);
-
-  if(socketUser)
+  if(socketUser){
     checkQueue(id, self).then((res) =>
-                res.forEach((resItem)=> self.sendTo(id, resItem)))
-                            .catch((err) => err);
+      res.forEach((resItem)=> self.sendTo(id, resItem)))
+        .catch((err) => err);
+    cleanQueue(id);
+  }
 };
 
 User.prototype.saveQueue = (id, data) =>{
+  const nt = new Notification();
+  nt.send(nt.formatMessage(data), (err, res)=>{});
   return id && data ? saveQueue(id, data) : null;
 };
 
