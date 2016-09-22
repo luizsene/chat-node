@@ -3,6 +3,8 @@
 const checkQueue = require('./checkQueue');
 const saveQueue = require('./saveQueue');
 const cleanQueue = require('./cleanQueue');
+const fs = require('fs');
+const saveFileQueue = require('./saveFileQueue');
 
 /**
 * List of all users online
@@ -155,6 +157,27 @@ User.prototype.saveQueue = (id, data) =>{
   const nt = new Notification();
   nt.send(nt.formatMessage(data), (err, res)=>{});
   return id && data ? saveQueue(id, data) : null;
+};
+
+
+User.prototype.saveFile = (socketStream, data) => {
+  const filename  = 'files/' + Date.now() + '.' + data.extension;
+  try {
+    socketStream.pipe(fs.createWriteStream(filename));
+  } catch (e){
+    console.error(e.message || e);
+  } finally {
+    const info = {
+      filename: 'http://192.168.0.27:3000/' + filename,
+      sender: data.sender,
+      receiver: data.receiver,
+      sender_login: data.sender_login,
+      receiver_login: data.receiver_login,
+      message: null,
+      date: Date.now()
+    };
+    self.saveQueue(info.receiver, info);
+  }
 };
 
 module.exports = User;

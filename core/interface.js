@@ -8,7 +8,6 @@
 const User = require('./user');
 const saveSQL = require('./sql');
 
-
 /**
 * Represents a connection between users.
 * @namespace
@@ -60,14 +59,11 @@ const interface_chat = (io, stream) =>{
 
     // send message
     stream(socket).on('send-file', (socketStream, data) => {
-      //TODO: implamentação
-      // user.isOnline(data.receiver).online
-      //     ? user.sendFileTo(data.receiver, socketStream, data)
-      //     : user.saveQueue(data.receiver, data);
+      User.prototype.saveFile.call(this, socketStream, data);
     });
 
     // disconnect
-    socket.on('disconnect', (data) => {
+    socket.on('disconnect', () => {
       User.prototype.offline.call(this, socket.user_id);
       user ? fnReport(user) : null;
     });

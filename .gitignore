@@ -4,3 +4,7 @@
 /coverage
 /out
 /Google Firebase.text
+/files/
+.DS_Store
+core/.DS_Store
+files/
