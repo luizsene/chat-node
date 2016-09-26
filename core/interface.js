@@ -59,7 +59,7 @@ const interface_chat = (io, stream) =>{
 
     // send message
     stream(socket).on('send-file', (socketStream, data) => {
-      User.prototype.saveFile.call(this, socketStream, data);
+      User.prototype.saveFile.call(this, socketStream, data, stream(socket));
     });
 
     // disconnect
