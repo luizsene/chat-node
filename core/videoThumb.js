@@ -1,22 +1,22 @@
 'use strict';
-
 const ffmpeg = require('fluent-ffmpeg');
-
 const _generateThumb = (uri) =>{
-  uri = '../' + uri;
-
-  const name  = (uri.split('/').pop()).replace('mp4', 'png');
-
+  const relativeUri = 'files/' + uri;
+  const name  = (uri).replace('mp4', 'png');
   return new Promise((resolve, reject)=>{
-    ffmpeg(uri).takeScreenshots({
-      count: 1,
-      filename: name
-    }, '../files/', (err)=>{
-      if(err) reject(err);
+    try {
+      ffmpeg(relativeUri).takeScreenshots({
+        count: 1,
+        filename: name
+      }, 'files/', (err)=>{
+        if(err) reject(err);
+        resolve();
+      });
       resolve();
-    });
+    }catch (err){
+      reject(err);
+    }
   });
-
 };
 
 module.exports = _generateThumb;

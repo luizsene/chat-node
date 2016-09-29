@@ -7,6 +7,7 @@
 */
 const User = require('./user');
 const saveSQL = require('./sql');
+const fs = require('fs');
 
 /**
 * Represents a connection between users.
@@ -57,9 +58,15 @@ const interface_chat = (io, stream) =>{
       );
     });
 
-    // send message
+    // send upload file
     stream(socket).on('send-file', (socketStream, data) => {
-      User.prototype.saveFile.call(this, socketStream, data, stream(socket));
+      const info = User.prototype.saveFile.call(this, socketStream, data);
+      socket.emit('init-upload', info);
+    });
+
+    // send file to client
+    socket.on('finish-upload', (filename, info)=>{
+      User.prototype.finishUpload.call(this, filename, info);
     });
 
     // disconnect

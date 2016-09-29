@@ -165,20 +165,6 @@ User.prototype.saveFile = (socketStream, data) => {
 
   socketStream.pipe(fileStream);
 
-  fileStream.on('close', ()=>{
-     console.log('close.');
-  });
-
-  fileStream.on('finish', ()=>{
-    console.log('Finalizado.');
-  });
-
-  const generateThumb = () =>{
-    videoThumb(filename).then(()=>{}).catch((err)=>{
-      throw err;
-    });
-  };
-
   const info = {
     filename: 'http://192.168.0.27:3000/' + filename,
     sender: data.sender,
@@ -190,7 +176,14 @@ User.prototype.saveFile = (socketStream, data) => {
     type: data.type
   };
 
-  self.saveQueue(info.receiver, info);
+  return info;
+};
+
+User.prototype.finishUpload = (filename, info) =>{
+  videoThumb(filename).then(function () {
+    console.log('Sucesso imagem gerada');
+    User.prototype.saveQueue.call(this, info.receiver, info);
+  });
 };
 
 module.exports = User;
