@@ -3,8 +3,9 @@
 *.pem
 /coverage
 /out
-/Google Firebase.text
+Google Firebase.text
 /files/
 .DS_Store
 core/.DS_Store
 files/
+dump.rdb
