@@ -66,7 +66,7 @@ const interface_chat = (io, stream) =>{
 
     // send file to client
     socket.on('finish-upload', (filename, info)=>{
-      User.prototype.finishUpload.call(this, filename, info);
+      if(info.type === 0) User.prototype.finishUpload.call(this, filename, info);
     });
 
     // disconnect

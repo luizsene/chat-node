@@ -15,8 +15,6 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-app.use('/files', express.static('files'));
-
-https.listen(3000, function(){
-  console.log('listening on *:3000');
+https.listen(1234, function(){
+  console.log('listening on *:1234');
 });
