@@ -5,6 +5,7 @@ const saveQueue = require('./saveQueue');
 const cleanQueue = require('./cleanQueue');
 const fs = require('fs');
 const videoThumb = require('./videoThumb');
+const UPLOAD = require('./constantes').UPLOADED_FILES;
 
 /**
 * List of all users online
@@ -158,15 +159,11 @@ User.prototype.saveQueue = (id, data) =>{
 
 
 User.prototype.saveFile = (socketStream, data) => {
-
-  const filename  = 'files/' + Date.now() + '.' + data.extension;
-
-  const fileStream = fs.createWriteStream(filename);
-
+  const filename  =  Date.now() + '.' + data.extension;
+  const fileStream = fs.createWriteStream((UPLOAD + filename));
   socketStream.pipe(fileStream);
-
   const info = {
-    filename: 'http://192.168.0.27:3000/' + filename,
+    filename: filename,
     sender: data.sender,
     receiver: data.receiver,
     sender_login: data.sender_login,
@@ -175,14 +172,14 @@ User.prototype.saveFile = (socketStream, data) => {
     date: Date.now(),
     type: data.type
   };
-
   return info;
 };
 
 User.prototype.finishUpload = (filename, info) =>{
   videoThumb(filename).then(function () {
-    console.log('Sucesso imagem gerada');
     User.prototype.saveQueue.call(this, info.receiver, info);
+  }).catch((err)=>{
+    throw err;
   });
 };
 
