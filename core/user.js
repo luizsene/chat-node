@@ -176,11 +176,21 @@ User.prototype.saveFile = (socketStream, data) => {
 };
 
 User.prototype.finishUpload = (filename, info) =>{
-  videoThumb(filename).then(function () {
-    User.prototype.saveQueue.call(this, info.receiver, info);
-  }).catch((err)=>{
-    throw err;
-  });
+
+  const callback = () =>{
+    User.prototype.isOnline.call(this, info.receiver).online
+        ? User.prototype.sendTo.call(this, info.receiver, info)
+        : User.prototype.saveQueue.call(this, info.receiver, info);
+  }
+  if(info.type === 0){
+    videoThumb(filename).then(function () {
+      callback();
+    }).catch((err)=>{
+      throw err;
+    });
+  }else{
+    callback();
+  }
 };
 
 module.exports = User;
