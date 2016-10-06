@@ -10,7 +10,7 @@ const ss = require('socket.io-stream');
 const fs = require('fs');
 const redisClient = require('../core/redis');
 
-const socketURL = 'http://0.0.0.0:3000';
+const socketURL = 'http://0.0.0.0:1234';
 
 const options = {
   transports: ['websocket'],

@@ -10,9 +10,8 @@ const https = require('http').Server(app);
 const io = require('socket.io').listen(https);
 const stream = require('socket.io-stream');
 const chat = require('./core/interface')(io, stream);
-const timer = require('./core/interval');
 
-timer();
+require('./core/interval')();
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');

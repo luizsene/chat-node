@@ -8,7 +8,7 @@ const io = require('socket.io-client');
 const User = require('../core/user');
 
 
-const socketURL = 'http://0.0.0.0:3000';
+const socketURL = 'http://0.0.0.0:1234';
 
 const options = {
   transports: ['websocket'],
