@@ -31,7 +31,7 @@
     "socket.io-client": "^1.4.8"
   },
   "scripts": {
-    "start": "nodemon cluster.js",
+    "start": "nodemon app.js",
     "redis": "redis-server",
     "test": "mocha -b -R spec -s 1000 -t 15000 ./test",
     "eslint": "eslint ./core/*.js ",
