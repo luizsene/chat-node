@@ -20,18 +20,18 @@ describe('Interface Chat', () => {
 
   describe('Nova conexão é criada ', () => {
 
-    it('Solicita informações ao cliente',(done) => {
-      const client = io.connect(socketURL, options);
-
-      after(() =>{
-        client.disconnect();
-      });
-
-      client.on('connection', (data) => {
-        assert.deepEqual({status: true}, data);
-        done();
-      });
-    });
+    // it('Solicita informações ao cliente',(done) => {
+    //   const client = io.connect(socketURL, options);
+    //
+    //   after(() =>{
+    //     client.disconnect();
+    //   });
+    //
+    //   client.on('connection', (data) => {
+    //     assert.deepEqual({status: true}, data);
+    //     done();
+    //   });
+    // });
 
     it('Devolução das informações feita pelo cliente',(done) => {
       const client = io.connect(socketURL, options);
