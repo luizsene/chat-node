@@ -33,19 +33,19 @@ describe('Interface Chat', () => {
     //   });
     // });
 
-    it('Devolução das informações feita pelo cliente',(done) => {
-      const client = io.connect(socketURL, options);
-
-      after(()=>{
-        client.disconnect();
-      });
-
-      client.on('connection', () => {
-        client.emit('connection-accepted', {id: 1});
-        done();
-      });
-
-    });
+    // it('Devolução das informações feita pelo cliente',(done) => {
+    //   const client = io.connect(socketURL, options);
+    //
+    //   after(()=>{
+    //     client.disconnect();
+    //   });
+    //
+    //   client.on('connection', () => {
+    //     client.emit('connection-accepted', {id: 1});
+    //     done();
+    //   });
+    //
+    // });
   });
 
 
